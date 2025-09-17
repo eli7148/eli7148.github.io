@@ -1,3 +1,10 @@
+Understood. We'll scrap the vertical layout and revert to the side-by-side UI that we were refining earlier.
+
+I have reverted the layout to have the **Card Collection on the left** and **Your Deck on the right**. I've also made sure to keep the successful changes: the font is correct, the blue/dark color scheme is applied, and the deck layout is now a compact 2x4 grid where all 8 cards fit without scrolling.
+
+Here is the reverted and corrected code:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,195 +22,161 @@
         * {
             font-family: 'You Blockhead', 'Arial', sans-serif !important;
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            /* THEME: Changed to a dark blue-gray background */
             background-color: #1e2a38;
             color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
             display: flex;
-            flex-direction: column;
-            height: 100vh; /* Full viewport height */
-            padding: 15px;
-            gap: 15px;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
         
-        /* --- Universal Panel Styling --- */
+        .left-column {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .panel {
-            /* THEME: Panels now have a consistent blue-gray theme */
             background-color: #2c3e50;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            width: 100%;
-            max-width: 900px; /* Constrain max width of all content */
-            margin: 0 auto; /* Center all panels */
         }
 
-        /* --- Search Bar (Now at top) --- */
         #search-bar {
             width: 100%;
-            padding: 8px; /* SMALLER */
-            font-size: 14px; /* SMALLER */
+            padding: 10px;
+            font-size: 16px;
             border-radius: 5px;
-            border: 2px solid #3498db; /* THEME: Blue border */
+            border: 2px solid #3498db;
             background-color: #1e2a38;
             color: #ecf0f1;
         }
 
-        /* --- Battle Deck Section --- */
-        .battle-deck-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 10px;
-        }
-
-        .elixir-cost {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px; /* SMALLER */
-            font-weight: bold;
-            color: #ecf0f1;
-        }
-
-        .elixir-icon {
-            width: 20px; /* SMALLER */
-            height: 20px; /* SMALLER */
-            /* ICON: Changed to the image you provided */
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARoSURBVFhHzZlriFVVFMd/5w4z48ykmTBqKILgHy2KNkVB0EUhblR81kWMLoKuuuoKwdZNb29b5cIs1FKEuAm7CCoKgopgMSolZk0kKWaah2k+fXDXybmZe+6d4xSHDxxmzpz5n7322WvvvQckJycnaZqml2wGdoDTwFngN3AA+Aw8A4bA+b4+A36W7S/5NTAKvAM2gR3gasw0/gIOgL+k+5fAX+ARsAxcAgaAL0CSHwI/Sq4zYA04AuwFvgLPgYdM058AF0A10JMc4g3gLXAA+BzoAMOBh4BvOfbPAc+BhcB74G9g3xvgO/AJ8B+4DjwD+pfvA/+BN3l64JdwCdgCvErSAx6X/CvAPeBZ4FvgN3Ap8Bv4CjgI/A7+A04C/wHngYvAc+A5cAm4DFwCzgefg0uA58A3wMXgY+A7cBl4DLwMXgO+A5eB58FHYD74CBgFPgaGA9OAaWAC+AgYAf4CjgD/gaOAf+AocBTYCSwGVgKbgM3ApmA3sB1YDWwG1gLbgM3AprA72AOsB9YCa4F1wLpgXXAtuB5cC64D1wPrgevB9eB6cD24HlwPbge3g9vBbeB2cD24GdwEbgY3gRvBjeA2cCO4CdwEbgV3givBneA2cCu4E9wKbgv3gisW6f/gT+A/4B/wD3gY/Ae8CrwHvgeeBN8Cr4Pvge+BV8F3wffA98C74Dvg+/B98C7YAD4HngYbAc+AZYBnwTLAU+CZYA3wVLAa+CZYA3wdrAW+DNYA3wbrgHXDt8FawPvg7WAt8C74e1gLfAO+HtYC3wBvh7WAX+Ct8dawDvgLXA/eBq8A14PrwXvgdfB68B54HbwevgfeB68H74D3wOvhe+Bt8DYYA8YB08Bk8AUYAc4Ax8BT4BhwDDiCHECOAUeQ48BR5BhwDDmCHCGPIUeEY8gx4BhyDDmCHEWOEMeQY8wx4BhzDDnGHGPOIUeYY8wx5BhzjDnEnHPOIUeEc+AxYAD4ClgE/gaWAW8Ay4B3wCLAceA48AhwHDgOnCAOAccB08BEYBr4BBgGzgCngE+Ay8A54AvwCXAWuAxcAg4DlwHHgePAceAYcBQ4AhwFjgKngePAVeAocBU4ClwFjgOXgUvA5eAycAm4DFwGzgCXgcvAZeAycBl4DlgGLgOWAccCy4BlwLJgGbAsWAYsC5YDy4HlwHLgOGBJcAy4HjgSXA4cCS4HjgWXA8uB5cBy4AhwPLgMHAUuBYeBy4Dh4HJwFDgOXA4OBReCo8Bl4Lh/A14HLgLHAYuB4/4NeBy4DBwGLgLH/RvwJLgMHAUuBYf9G/AscAw4ClwEjuM34DlwADgOXASO+zfgB+As8BjYCPwFjgH/kGfAMeA/8D84CvwnnAP+A8+Ap8EHYD6YBj4CBuB/4BhwFDgKHAMOAUeQY8Ax5BhwDDmCHEWOIMeQY8gx4BhzDDmGnIMz8DnwDjgCPAeeBYeAkcAy4BmwFPge2ATsBTYDC4EdwE5gL3ApkE+X/4E8nWe/v4GvJSy+L/l/Ac3R97P0h5/vAAAAAElFTkSuQmCC');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .battle-deck-title {
-            font-size: 24px; /* SMALLER */
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .menu-icon {
-            width: 24px; /* SMALLER */
-            height: 24px; /* SMALLER */
-            cursor: pointer;
-        }
-        .menu-icon > div {
-            width: 100%; height: 3px; background-color: white; margin-bottom: 4px; border-radius: 2px;
-        }
-
-        .deck-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-width: 450px; /* SMALLER */
-            margin: 0 auto;
-        }
-
-        .deck-slot {
-            aspect-ratio: 0.8;
-            background-color: #1e2a38;
-            border: 2px dashed #4a627a;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* ICON: Changed to a crown SVG */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%234A627A" d="M10 35 L10 90 L90 90 L90 35 L75 50 L50 20 L25 50 Z M50 55 C55 55 60 50 60 45 C60 40 55 35 50 35 C45 35 40 40 40 45 C40 50 45 55 50 55 Z"/></svg>');
-            background-size: 50%;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* --- Card Collection (Scrollable Area) --- */
-        .card-selection-panel {
-            flex: 1; /* Allow this to grow and fill remaining space */
-            min-height: 0; /* Important for flex-grow in a flex column */
-            overflow-y: auto; /* Make this panel scrollable */
-        }
-
-        .card-collection-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 0;
-            border-bottom: 2px solid #3498db; /* THEME: Blue underline */
-            padding-bottom: 10px;
-            font-size: 22px; /* SMALLER */
-            margin-bottom: 15px; /* Space between header and grid */
-        }
-        #card-count {
+        #search-bar::placeholder {
             color: #95a5a6;
-            font-size: 16px; /* SMALLER */
-            margin-left: 10px;
+        }
+
+        .card-selection {
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .card-selection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* SMALLER */
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .deck-builder {
+            flex: 0 1 250px; /* Give the deck a fixed but flexible width */
+        }
+
+        .deck-grid {
+            display: grid;
+            /* A 2x4 grid for the deck */
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
 
-        .card {
+        .card, .deck-slot {
             aspect-ratio: 0.8;
             background-color: #1e2a38;
             border: 2px dashed #4a627a;
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
+        .card img, .deck-slot img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+        }
+
         .card:hover {
-            border-color: #3498db; /* THEME: Blue hover */
+            border-color: #3498db;
             transform: scale(1.05);
+        }
+        
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+
+        #card-count {
+            color: #95a5a6;
+            font-size: 18px;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
 
-    <div class="panel search-bar-panel">
-        <input type="search" id="search-bar" placeholder="Search for cards...">
-    </div>
-
-    <div class="panel battle-deck-panel">
-        <div class="battle-deck-header">
-            <div class="elixir-cost">
-                <div class="elixir-icon"></div>
-                Avg. Elixir: 4.1
+    <div class="app-container">
+        
+        <div class="left-column">
+            <div class="panel">
+                <input type="search" id="search-bar" placeholder="Search for cards...">
             </div>
-            <div class="battle-deck-title">Battle Deck</div>
-            <div class="menu-icon">
-                <div></div>
-                <div></div>
-                <div></div>
+
+            <div class="panel card-selection">
+                <h2>Card Collection <span id="card-count">(16)</span></h2>
+                <div class="card-selection-grid">
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                </div>
             </div>
         </div>
-        <div class="deck-cards-grid">
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-            <div class="deck-slot"></div>
-        </div>
-    </div>
 
-    <div class="panel card-selection-panel">
-        <h2 class="card-collection-header">
-            Card Collection <span id="card-count">(16)</span>
-        </h2>
-        <div class="card-selection-grid">
-            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
-            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
-            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
-            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+        <div class="panel deck-builder">
+            <h2>Your Deck</h2>
+            <div class="deck-grid">
+                <div class="deck-slot"><img src="" alt="Deck Slot 1"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 2"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 3"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 4"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 5"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 6"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 7"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 8"></div>
+            </div>
         </div>
+
     </div>
 
 </body>
 </html>
+```
