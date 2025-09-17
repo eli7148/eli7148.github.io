@@ -20,151 +20,109 @@
         }
 
         body {
-            background-color: #f47b20; /* Main app background */
+            /* THEME: Changed to a dark blue-gray background */
+            background-color: #1e2a38;
             color: #ecf0f1;
             display: flex;
-            flex-direction: column; /* Stack elements vertically */
-            min-height: 100vh; /* Full viewport height */
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+            padding: 15px;
+            gap: 15px;
+        }
+        
+        /* --- Universal Panel Styling --- */
+        .panel {
+            /* THEME: Panels now have a consistent blue-gray theme */
+            background-color: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 900px; /* Constrain max width of all content */
+            margin: 0 auto; /* Center all panels */
         }
 
-        /* --- TOP DECK SECTION (Based on Clash Royale Image) --- */
+        /* --- Search Bar (Now at top) --- */
+        #search-bar {
+            width: 100%;
+            padding: 8px; /* SMALLER */
+            font-size: 14px; /* SMALLER */
+            border-radius: 5px;
+            border: 2px solid #3498db; /* THEME: Blue border */
+            background-color: #1e2a38;
+            color: #ecf0f1;
+        }
+
+        /* --- Battle Deck Section --- */
         .battle-deck-header {
-            background-color: #3f51b5; /* Darker blue */
-            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            padding-bottom: 10px;
         }
 
         .elixir-cost {
             display: flex;
             align-items: center;
             gap: 5px;
-            background-color: #2c3e50; /* Darker panel for elixir */
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 18px;
+            font-size: 14px; /* SMALLER */
             font-weight: bold;
-            color: #ffeb3b; /* Yellow for elixir */
-            border: 1px solid #ff9800; /* Orange border */
+            color: #ecf0f1;
         }
 
         .elixir-icon {
-            width: 20px;
-            height: 20px;
-            background-color: #8c418c; /* Purple */
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
+            width: 20px; /* SMALLER */
+            height: 20px; /* SMALLER */
+            /* ICON: Changed to the image you provided */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARoSURBVFhHzZlriFVVFMd/5w4z48ykmTBqKILgHy2KNkVB0EUhblR81kWMLoKuuuoKwdZNb29b5cIs1FKEuAm7CCoKgopgMSolZk0kKWaah2k+fXDXybmZe+6d4xSHDxxmzpz5n7322WvvvQckJycnaZqml2wGdoDTwFngN3AA+Aw8A4bA+b4+A36W7S/5NTAKvAM2gR3gasw0/gIOgL+k+5fAX+ARsAxcAgaAL0CSHwI/Sq4zYA04AuwFvgLPgYdM058AF0A10JMc4g3gLXAA+BzoAMOBh4BvOfbPAc+BhcB74G9g3xvgO/AJ8B+4DjwD+pfvA/+BN3l64JdwCdgCvErSAx6X/CvAPeBZ4FvgN3Ap8Bv4CjgI/A7+A04C/wHngYvAc+A5cAm4DFwCzgefg0uA58A3wMXgY+A7cBl4DLwMXgO+A5eB58FHYD74CBgFPgaGA9OAaWAC+AgYAf4CjgD/gaOAf+AocBTYCSwGVgKbgM3ApmA3sB1YDWwG1gLbgM3AprA72AOsB9YCa4F1wLpgXXAtuB5cC64D1wPrgevB9eB6cD24HlwPbge3g9vBbeB2cD24GdwEbgY3gRvBjeA2cCO4CdwEbgV3givBneA2cCu4E9wKbgv3gisW6f/gT+A/4B/wD3gY/Ae8CrwHvgeeBN8Cr4Pvge+BV8F3wffA98C74Dvg+/B98C7YAD4HngYbAc+AZYBnwTLAU+CZYA3wVLAa+CZYA3wdrAW+DNYA3wbrgHXDt8FawPvg7WAt8C74e1gLfAO+HtYC3wBvh7WAX+Ct8dawDvgLXA/eBq8A14PrwXvgdfB68B54HbwevgfeB68H74D3wOvhe+Bt8DYYA8YB08Bk8AUYAc4Ax8BT4BhwDDiCHECOAUeQ48BR5BhwDDmCHCGPIUeEY8gx4BhyDDmCHEWOEMeQY8wx4BhzDDnGHGPOIUeYY8wx5BhzjDnEnHPOIUeEc+AxYAD4ClgE/gaWAW8Ay4B3wCLAceA48AhwHDgOnCAOAccB08BEYBr4BBgGzgCngE+Ay8A54AvwCXAWuAxcAg4DlwHHgePAceAYcBQ4AhwFjgKngePAVeAocBU4ClwFjgOXgUvA5eAycAm4DFwGzgCXgcvAZeAycBl4DlgGLgOWAccCy4BlwLJgGbAsWAYsC5YDy4HlwHLgOGBJcAy4HjgSXA4cCS4HjgWXA8uB5cBy4AhwPLgMHAUuBYeBy4Dh4HJwFDgOXA4OBReCo8Bl4Lh/A14HLgLHAYuB4/4NeBy4DBwGLgLH/RvwJLgMHAUuBYf9G/AscAw4ClwEjuM34DlwADgOXASO+zfgB+As8BjYCPwFjgH/kGfAMeA/8D84CvwnnAP+A8+Ap8EHYD6YBj4CBuB/4BhwFDgKHAMOAUeQY8Ax5BhwDDmCHEWOIMeQY8gx4BhzDDmGnIMz8DnwDjgCPAeeBYeAkcAy4BmwFPge2ATsBTYDC4EdwE5gL3ApkE+X/4E8nWe/v4GvJSy+L/l/Ac3R97P0h5/vAAAAAElFTkSuQmCC');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .battle-deck-title {
-            font-size: 28px;
+            font-size: 24px; /* SMALLER */
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .menu-icon {
-            width: 30px;
-            height: 30px;
-            background-color: #2c3e50;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 6px 0;
+            width: 24px; /* SMALLER */
+            height: 24px; /* SMALLER */
             cursor: pointer;
         }
-
-        .menu-icon div {
-            width: 70%;
-            height: 3px;
-            background-color: #fff;
-            border-radius: 2px;
-            margin: 0 auto;
-        }
-
-        .deck-cards-area {
-            background-color: #2196f3; /* Brighter blue for the card area */
-            padding: 15px 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        .menu-icon > div {
+            width: 100%; height: 3px; background-color: white; margin-bottom: 4px; border-radius: 2px;
         }
 
         .deck-cards-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            max-width: 600px; /* Constrain width to keep cards from getting too wide */
-            margin: 0 auto; /* Center the grid */
+            max-width: 450px; /* SMALLER */
+            margin: 0 auto;
         }
 
         .deck-slot {
             aspect-ratio: 0.8;
-            background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent for placeholder */
-            border: 2px dashed rgba(255, 255, 255, 0.3); /* Lighter dashed border */
+            background-color: #1e2a38;
+            border: 2px dashed #4a627a;
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            /* Background image for crown */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="%234A627A" d="M25 2L15 15H5L10 25L5 35H15L25 48L35 35H45L40 25L45 15H35L25 2Z"/></svg>');
-            background-size: 60%;
+            /* ICON: Changed to a crown SVG */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%234A627A" d="M10 35 L10 90 L90 90 L90 35 L75 50 L50 20 L25 50 Z M50 55 C55 55 60 50 60 45 C60 40 55 35 50 35 C45 35 40 40 40 45 C40 50 45 55 50 55 Z"/></svg>');
+            background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        /* --- MAIN CONTENT CONTAINER --- */
-        .main-content {
-            display: flex;
-            padding: 20px; /* Padding around the content */
-            flex: 1; /* Allow content to grow and fill remaining space */
-            gap: 20px;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto; /* Center main content */
-        }
-        
-        .left-column-content {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .search-bar-panel {
-            background-color: #212121;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        #search-bar {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 2px solid #ff9800;
-            background-color: #333;
-            color: #ecf0f1;
-        }
-
-        #search-bar::placeholder {
-            color: #95a5a6;
-        }
-
+        /* --- Card Collection (Scrollable Area) --- */
         .card-selection-panel {
-            background-color: #212121;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            flex: 1; /* Allow card selection to grow */
-            min-height: 40vh; /* Ensure it has some height */
-            overflow-y: auto; /* Make it scrollable */
+            flex: 1; /* Allow this to grow and fill remaining space */
+            min-height: 0; /* Important for flex-grow in a flex column */
+            overflow-y: auto; /* Make this panel scrollable */
         }
 
         .card-collection-header {
@@ -172,64 +130,57 @@
             justify-content: center;
             align-items: center;
             margin-top: 0;
-            border-bottom: 2px solid #ff9800;
+            border-bottom: 2px solid #3498db; /* THEME: Blue underline */
             padding-bottom: 10px;
-            font-size: 24px;
+            font-size: 22px; /* SMALLER */
+            margin-bottom: 15px; /* Space between header and grid */
         }
-
         #card-count {
             color: #95a5a6;
-            font-size: 18px;
-            vertical-align: middle;
+            font-size: 16px; /* SMALLER */
             margin-left: 10px;
         }
 
         .card-selection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 15px;
-            padding-top: 15px; /* Add some space below the header */
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* SMALLER */
+            gap: 10px;
         }
 
         .card {
             aspect-ratio: 0.8;
-            background-color: #333;
-            border: 2px dashed #555;
-            border-radius: 10px;
+            background-color: #1e2a38;
+            border: 2px dashed #4a627a;
+            border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         
-        .card img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-        }
-
         .card:hover {
-            border-color: #ff9800;
+            border-color: #3498db; /* THEME: Blue hover */
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
-    <div class="battle-deck-header">
-        <div class="elixir-cost">
-            <div class="elixir-icon"></div> AVERAGE ELIXIR COST 6
-        </div>
-        <div class="battle-deck-title">Battle Deck</div>
-        <div class="menu-icon">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+    <div class="panel search-bar-panel">
+        <input type="search" id="search-bar" placeholder="Search for cards...">
     </div>
 
-    <div class="deck-cards-area">
+    <div class="panel battle-deck-panel">
+        <div class="battle-deck-header">
+            <div class="elixir-cost">
+                <div class="elixir-icon"></div>
+                Avg. Elixir: 4.1
+            </div>
+            <div class="battle-deck-title">Battle Deck</div>
+            <div class="menu-icon">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
         <div class="deck-cards-grid">
             <div class="deck-slot"></div>
             <div class="deck-slot"></div>
@@ -242,33 +193,15 @@
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="left-column-content">
-            <div class="panel search-bar-panel">
-                <input type="search" id="search-bar" placeholder="Search for cards...">
-            </div>
-
-            <div class="panel card-selection-panel">
-                <h2 class="card-collection-header">Card Collection <span id="card-count">(16)</span></h2>
-                <div class="card-selection-grid">
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                </div>
-            </div>
+    <div class="panel card-selection-panel">
+        <h2 class="card-collection-header">
+            Card Collection <span id="card-count">(16)</span>
+        </h2>
+        <div class="card-selection-grid">
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
+            <div class="card"></div><div class="card"></div><div class="card"></div><div class="card"></div>
         </div>
     </div>
 
