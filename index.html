@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clash Royale Deck Maker</title>
+    <link rel="stylesheet" href="sprites.css">
     <style>
         @font-face {
             font-family: 'You Blockhead';
@@ -58,19 +59,16 @@
             color: #ecf0f1;
         }
 
-        #search-bar::placeholder {
-            color: #95a5a6;
-        }
-
         .card-selection {
             max-height: 85vh;
             overflow-y: auto;
         }
-
+        
         .card-selection-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(97px, 1fr));
             gap: 15px;
+            justify-items: center;
         }
 
         .deck-builder {
@@ -82,25 +80,21 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-
-        .card, .deck-slot {
-            aspect-ratio: 0.8;
-            background-color: #1e2a38;
-            border: 2px dashed #4a627a;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 6px;
-        }
         
-        .card:hover {
-            border-color: #3498db;
+        /* This class name should match the base class in your sprites.css */
+        .sprite {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .deck-slot {
+             aspect-ratio: 0.8;
+             background-color: #1e2a38;
+             border: 2px dashed #4a627a;
+             border-radius: 8px;
+        }
+
+        .sprite:hover {
             transform: scale(1.05);
         }
         
@@ -131,31 +125,33 @@
 
             <div class="panel card-selection">
                 <h2>Card Collection <span id="card-count">(0)</span></h2>
-                <div class="card-selection-grid" id="card-grid">
-                    </div>
+                <div class="card-selection-grid" id="card-grid"></div>
             </div>
         </div>
 
         <div class="panel deck-builder">
             <h2>Deck</h2>
             <div class="deck-grid">
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
+                <div class="deck-slot"></div><div class="deck-slot"></div>
+                <div class="deck-slot"></div><div class="deck-slot"></div>
+                <div class="deck-slot"></div><div class="deck-slot"></div>
+                <div class="deck-slot"></div><div class="deck-slot"></div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // You will add your 150 image filenames here later
+        // IMPORTANT: List all 150 of your ORIGINAL image filenames here.
+        // The script uses these names to create the correct CSS class for each card.
         const cardImageFiles = [
-            // Example: 'knight.png', 'arrows.png', etc.
+            'knight.png', 'arrows.png', 'goblins.png', 'giant.png', 'pekka.png',
+            'minions.png', 'balloon.png', 'witch.png', 'barbarians.png', 'golem.png',
+            'skeletons.png', 'valkyrie.png', 'goblin-barrel.png', 'musketeer.png',
+            'baby-dragon.png', 'prince.png'
+            // ... add the rest of your 150 filenames here, for example:
+            // 'hog-rider.png',
+            // 'x-bow.png',
         ];
 
         const cardGrid = document.getElementById('card-grid');
@@ -163,12 +159,12 @@
         let cardHTML = '';
 
         for (const fileName of cardImageFiles) {
-            const cardName = fileName.split('.')[0].replace(/-/g, ' '); // a little bonus to make alt text readable
-            cardHTML += `
-                <div class="card">
-                    <img src="./images/${fileName}" alt="${cardName}">
-                </div>
-            `;
+            // Get the card name without the '.png' or '.jpg' to use as a class
+            // This must match the class names in your sprites.css file (e.g., .knight, .arrows)
+            const cardName = fileName.split('.')[0];
+            
+            // This creates a div with the class "sprite" and the specific card's class (e.g., "knight")
+            cardHTML += `<div class="sprite ${cardName}"></div>`;
         }
 
         cardGrid.innerHTML = cardHTML;
