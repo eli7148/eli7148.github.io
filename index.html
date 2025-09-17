@@ -12,12 +12,10 @@
             font-weight: normal;
             font-style: normal;
         }
-
         * {
             font-family: 'You Blockhead', 'Arial', sans-serif !important;
             box-sizing: border-box;
         }
-
         body {
             background-color: #1e2a38;
             color: #ecf0f1;
@@ -25,7 +23,6 @@
             padding: 20px;
             padding-top: 0;
         }
-
         .app-container {
             width: 100%;
             max-width: 1200px;
@@ -34,111 +31,89 @@
             gap: 20px;
             align-items: flex-start;
         }
-        
         .left-column {
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
         .panel {
             background-color: #2c3e50;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
-
         #search-bar {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 2px solid #3498db;
-            background-color: #1e2a38;
-            color: #ecf0f1;
+            width: 100%; padding: 10px; font-size: 16px; border-radius: 5px;
+            border: 2px solid #3498db; background-color: #1e2a38; color: #ecf0f1;
         }
-
         .card-selection {
             max-height: 85vh;
             overflow-y: auto;
         }
-        
         .card-selection-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, 150px);
             gap: 15px;
             justify-content: center;
         }
-
         .deck-builder {
             flex: 0 0 200px;
+            /* Adjust padding to account for scaled content */
+            padding: 10px;
         }
-
         .deck-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            grid-auto-rows: min-content;
+            /* FIXED: Use transform to scale the grid down */
+            transform: scale(0.6);
+            transform-origin: top left;
         }
-        
         .deck-slot {
-             aspect-ratio: 0.83;
+             width: 150px; /* Match sprite width */
+             height: 180px; /* Match sprite height */
              background-color: #1e2a38;
              border: 2px dashed #4a627a;
              border-radius: 8px;
              cursor: pointer;
         }
-
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
         }
-
         .sprite:hover {
             transform: scale(1.05);
         }
-        
-        /* --- FIX for Deck Resizing Issue --- */
-        /* This new rule targets sprite cards ONLY when they are inside the deck grid */
-        .deck-grid .sprite {
-            width: 100%; /* Force the card to the width of the grid slot */
-            height: 100%; /* Force the card to the height of the grid slot */
-            background-size: cover; /* Scale the background image to fit */
-        }
-        /* ------------------------------------ */
-
         h2 {
-            margin-top: 0;
-            text-align: center;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-            font-size: 24px;
-            width: 100%;
+            margin-top: 0; text-align: center; border-bottom: 2px solid #3498db;
+            padding-bottom: 10px; font-size: 24px; width: 100%;
+        }
+        #card-count {
+            color: #95a5a6; font-size: 18px; vertical-align: middle;
         }
 
-        #card-count {
-            color: #95a5a6;
-            font-size: 18px;
-            vertical-align: middle;
+        /* ADDED: Shake animation for duplicate card attempts */
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
-
     <div class="app-container">
-        
         <div class="left-column">
             <div class="panel">
                 <input type="search" id="search-bar" placeholder="Search for cards...">
             </div>
-
             <div class="panel card-selection">
                 <h2>Card Collection <span id="card-count">(0)</span></h2>
                 <div class="card-selection-grid" id="card-grid"></div>
             </div>
         </div>
-
         <div class="panel deck-builder">
             <h2>Deck</h2>
             <div class="deck-grid" id="deck-grid">
@@ -148,7 +123,6 @@
                 <div class="deck-slot"></div><div class="deck-slot"></div>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -182,17 +156,23 @@
 
         function addCardToDeck(cardClasses) {
             const deckSlots = deckGrid.querySelectorAll('.deck-slot');
-            
+            const newCardName = cardClasses.split(' ')[1];
+
+            // Check for duplicates and provide feedback
             const cardsInDeck = deckGrid.querySelectorAll('[class*="sprite"]');
             for(const card of cardsInDeck) {
-                if (card.className.includes(cardClasses.split(' ')[1])) {
+                if (card.classList.contains(newCardName)) {
+                    // If card is found, trigger shake animation and stop
+                    card.classList.add('shake');
+                    setTimeout(() => card.classList.remove('shake'), 500); // Remove class after animation
                     return; 
                 }
             }
             
+            // Find an empty slot and add the card
             for (const slot of deckSlots) {
                 if (slot.classList.length === 1) { 
-                    slot.className = `deck-slot ${cardClasses}`; 
+                    slot.className = `sprite ${cardClasses}`; // Use sprite classes directly
                     return;
                 }
             }
@@ -210,11 +190,11 @@
         });
 
         deckGrid.addEventListener('click', function(event) {
+            // Check if it's a card in the deck (not an empty slot)
             if (event.target.classList.contains('sprite')) {
                 removeCardFromDeck(event.target);
             }
         });
     </script>
-
 </body>
 </html>
