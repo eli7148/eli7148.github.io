@@ -21,9 +21,12 @@
             background-color: #1e2a38;
             color: #ecf0f1;
             margin: 0;
-            padding: 20px;
+            /* FIXED: Removed top and bottom padding to eliminate extra space */
+            padding: 0 20px;
             display: flex;
             justify-content: center;
+            /* Added a little top padding to the container instead of the body */
+            padding-top: 20px;
         }
 
         .app-container {
@@ -69,12 +72,12 @@
 
         .card-selection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            /* ADJUSTED: Card size reduced by 3% */
+            grid-template-columns: repeat(auto-fill, minmax(97px, 1fr));
             gap: 15px;
         }
 
         .deck-builder {
-            /* ADJUSTED: Slightly increased width for bigger cards */
             flex: 0 1 180px; 
         }
 
@@ -91,11 +94,6 @@
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* REMOVED: No default image inside, so no broken icons */
-            /* Removed img related styling here as img tags are gone */
         }
         
         .card:hover {
@@ -109,7 +107,7 @@
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
             font-size: 24px;
-            width: 100%; /* Ensure title fills its container */
+            width: 100%;
         }
 
         #card-count {
@@ -152,7 +150,8 @@
         </div>
 
         <div class="panel deck-builder">
-            <h2>Deck</h2> <div class="deck-grid">
+            <h2>Deck</h2>
+            <div class="deck-grid">
                 <div class="deck-slot"></div>
                 <div class="deck-slot"></div>
                 <div class="deck-slot"></div>
