@@ -1,8 +1,12 @@
+/* FIXED: The 'background' property has been split into individual properties */
 .sprite { 
-    background: url('images/sprite.png') no-repeat top left; 
+    background-image: url('images/sprite.png'); 
+    background-repeat: no-repeat;
+    background-position: 0 0; /* This is a default, overridden by specific cards */
     width: 150px; 
     height: 180px;  
 } 
+
 .sprite.archers { background-position: 0 0; } 
 .sprite.arrows { background-position: -160px 0; } 
 .sprite.baby-dragon { background-position: -320px 0; } 
