@@ -81,7 +81,6 @@
             gap: 10px;
         }
         
-        /* The class name from your sprites.css, likely '.sprite' */
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
@@ -92,6 +91,8 @@
              background-color: #1e2a38;
              border: 2px dashed #4a627a;
              border-radius: 8px;
+             /* Add a transition for when cards are added/removed */
+             transition: background-image 0.2s;
         }
 
         .sprite:hover {
@@ -131,7 +132,7 @@
 
         <div class="panel deck-builder">
             <h2>Deck</h2>
-            <div class="deck-grid">
+            <div class="deck-grid" id="deck-grid">
                 <div class="deck-slot"></div><div class="deck-slot"></div>
                 <div class="deck-slot"></div><div class="deck-slot"></div>
                 <div class="deck-slot"></div><div class="deck-slot"></div>
@@ -142,7 +143,6 @@
     </div>
 
     <script>
-        // ALL 109 CARD FILENAMES EXTRACTED FROM YOUR VIDEO
         const cardImageFiles = [
             'archers.png', 'arrows.png', 'baby-dragon.png', 'balloon.png', 'bandit.png', 
             'barbarian-barrel.png', 'barbarian-hut.png', 'barbarians.png', 'bats.png', 
@@ -171,17 +171,60 @@
             'wizard.png', 'x-bow.png', 'zap.png', 'zappies.png'
         ];
 
+        // --- Get references to our HTML elements ---
         const cardGrid = document.getElementById('card-grid');
+        const deckGrid = document.getElementById('deck-grid');
         const cardCountSpan = document.getElementById('card-count');
+        
+        // --- Generate the Card Collection ---
         let cardHTML = '';
-
         for (const fileName of cardImageFiles) {
             const cardName = fileName.split('.')[0];
-            cardHTML += `<div class="sprite ${cardName}"></div>`;
+            // Add a data attribute to store the class names for easy copying
+            cardHTML += `<div class="sprite ${cardName}" data-card-class="sprite ${cardName}"></div>`;
         }
-
         cardGrid.innerHTML = cardHTML;
         cardCountSpan.textContent = `(${cardImageFiles.length})`;
+
+        // --- Add a card to the deck ---
+        function addCardToDeck(cardClasses) {
+            const deckSlots = deckGrid.querySelectorAll('.deck-slot');
+            for (const slot of deckSlots) {
+                // Find the first slot that is empty (only has 'deck-slot' class)
+                if (slot.classList.length === 1) {
+                    slot.className = cardClasses; // Apply the card's sprite classes
+                    return; // Exit the function after adding the card
+                }
+            }
+            // Optional: Alert the user if the deck is full
+            // alert("Your deck is full!");
+        }
+
+        // --- Remove a card from the deck ---
+        function removeCardFromDeck(clickedCard) {
+            // Reset the element back to being just a deck slot
+            clickedCard.className = 'deck-slot';
+        }
+
+        // --- Event Listeners ---
+
+        // Listen for clicks on the entire card collection
+        cardGrid.addEventListener('click', function(event) {
+            // Check if the clicked element is a card
+            if (event.target.classList.contains('sprite')) {
+                const cardClasses = event.target.dataset.cardClass;
+                addCardToDeck(cardClasses);
+            }
+        });
+
+        // Listen for clicks on the deck
+        deckGrid.addEventListener('click', function(event) {
+            // Check if the clicked element is a card in the deck
+            // It's a card if it's not just a simple 'deck-slot'
+            if (event.target.classList.length > 1 && event.target.classList.contains('deck-slot')) {
+                removeCardFromDeck(event.target);
+            }
+        });
     </script>
 
 </body>
