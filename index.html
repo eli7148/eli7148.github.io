@@ -90,7 +90,6 @@
              cursor: pointer;
         }
 
-        /* The .sprite class comes from sprites.css */
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
@@ -100,6 +99,15 @@
             transform: scale(1.05);
         }
         
+        /* --- FIX for Deck Resizing Issue --- */
+        /* This new rule targets sprite cards ONLY when they are inside the deck grid */
+        .deck-grid .sprite {
+            width: 100%; /* Force the card to the width of the grid slot */
+            height: 100%; /* Force the card to the height of the grid slot */
+            background-size: cover; /* Scale the background image to fit */
+        }
+        /* ------------------------------------ */
+
         h2 {
             margin-top: 0;
             text-align: center;
@@ -177,7 +185,7 @@
             
             const cardsInDeck = deckGrid.querySelectorAll('[class*="sprite"]');
             for(const card of cardsInDeck) {
-                if (card.className.includes(cardClasses.split(' ')[1])) { // Check for the specific card name
+                if (card.className.includes(cardClasses.split(' ')[1])) {
                     return; 
                 }
             }
