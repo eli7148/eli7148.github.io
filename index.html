@@ -21,9 +21,8 @@
             background-color: #1e2a38;
             color: #ecf0f1;
             margin: 0;
-            /* FIXED: Padding applied only to the sides and bottom */
-            padding: 20px;
-            padding-top: 0; /* Ensures content starts at the very top */
+            padding: 20px; /* This padding provides the space on the left and right */
+            padding-top: 0;
         }
 
         .app-container {
@@ -33,7 +32,7 @@
             display: flex;
             gap: 20px;
             align-items: flex-start;
-            padding-top: 20px; /* Add padding here so the container starts slightly lower, but the body background is at the top */
+            /* FIXED: Removed the padding-top that was creating the unwanted space */
         }
         
         .left-column {
