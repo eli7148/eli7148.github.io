@@ -20,7 +20,7 @@
             background-color: #1e2a38;
             color: #ecf0f1;
             margin: 0;
-            padding: 20px;
+            /* FIXED: Padding moved to the container to fix top alignment */
         }
         .app-container {
             width: 100%;
@@ -29,6 +29,8 @@
             display: flex;
             gap: 20px;
             align-items: flex-start;
+            /* FIXED: Padding here controls spacing without pushing the page down */
+            padding: 20px;
         }
         .left-column {
             flex: 1 1 auto;
@@ -70,13 +72,13 @@
              border: 2px dashed #4a627a;
              border-radius: 8px;
              cursor: pointer;
-             padding: 4px; /* Add some padding for the image inside */
+             padding: 4px;
         }
-        /* NEW: Styles for the raw image inside a deck slot */
+        /* FIXED: This rule styles the raw images placed in the deck */
         .deck-slot img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Shrinks the image to fit without stretching */
+            object-fit: contain; /* Shrinks image to fit without stretching */
         }
         .sprite {
             cursor: pointer;
@@ -126,7 +128,7 @@
     </div>
 
     <script>
-        // UPDATED: Now using the full filenames to link to raw images
+        // Full list of original filenames to find the raw images
         const cardImageFiles = [
             'archers.png', 'arrows.png', 'baby-dragon.png', 'balloon.png', 'bandit.png', 'barbarian-barrel.png', 'barbarian-hut.png', 'barbarians.png', 'bats.png', 'battle-healer.png', 'battle-ram.png', 'bomb-tower.png', 'bomber.png', 'bowler.png', 'cannon-cart.png', 'cannon.png', 'clone.png', 'dark-prince.png', 'dart-goblin.png', 'earthquake.png', 'electro-dragon.png', 'electro-giant.png', 'electro-spirit.png', 'electro-wizard.png', 'elite-barbarians.png', 'elixir-collector.png', 'elixir-golem.png', 'executioner.png', 'fire-spirits.png', 'fireball.png', 'firecracker.png', 'fisherman.png', 'flying-machine.png', 'freeze.png', 'furnace.png', 'giant-skeleton.png', 'giant-snowball.png', 'giant.png', 'goblin-barrel.png', 'goblin-cage.png', 'goblin-gang.png', 'goblin-giant.png', 'goblin-hut.png', 'goblins.png', 'golem.png', 'guards.png', 'graveyard.png', 'heal-spirit.png', 'heal.png', 'hog-rider.png', 'hunter.png', 'ice-golem.png', 'ice-spirit.png', 'ice-wizard.png', 'inferno-dragon.png', 'knight.png', 'lava-hound.png', 'lightning.png', 'inferno-tower.png', 'lumberjack.png', 'mega-minion.png', 'miner.png', 'mega-knight.png', 'magic-archer.png', 'mini-pekka.png', 'minion-horde.png', 'minions.png', 'mirror.png', 'mortar.png', 'mother-witch.png', 'musketeer.png', 'night-witch.png', 'pekka.png', 'poison.png', 'prince.png', 'princess.png', 'rage.png', 'ram-rider.png', 'rascals.png', 'rocket.png', 'royal-delivery.png', 'royal-ghost.png', 'royal-giant.png', 'royal-hogs.png', 'royal-recruits.png', 'skeleton-army.png', 'skeleton-barrel.png', 'skeleton-dragons.png', 'skeletons.png', 'sparky.png', 'spear-goblins.png', 'tesla.png', 'the-log.png', 'three-musketeers.png', 'tombstone.png', 'tornado.png', 'valkyrie.png', 'wall-breakers.png', 'witch.png', 'wizard.png', 'x-bow.png', 'zap.png', 'zappies.png'
         ];
@@ -138,7 +140,7 @@
         let cardHTML = '';
         for (const fileName of cardImageFiles) {
             const cardName = fileName.split('.')[0];
-            // Storing the full filename in a data attribute
+            // Store the raw filename in a data-attribute for later use
             cardHTML += `<div class="sprite ${cardName}" data-filename="${fileName}"></div>`;
         }
         cardGrid.innerHTML = cardHTML;
@@ -146,10 +148,10 @@
 
         function addCardToDeck(clickedCard) {
             const deckSlots = deckGrid.querySelectorAll('.deck-slot');
-            const filename = clickedCard.dataset.filename; // Get the raw filename
+            const filename = clickedCard.dataset.filename;
             const newImageSrc = `./images/${filename}`;
 
-            // Check for duplicates by checking the image src
+            // Check for duplicates
             const imagesInDeck = deckGrid.querySelectorAll('img');
             for (const img of imagesInDeck) {
                 if (img.src.endsWith(filename)) {
@@ -159,10 +161,10 @@
                 }
             }
 
+            // Find an empty slot and add a raw image tag
             for (const slot of deckSlots) {
-                if (slot.innerHTML === '') { // Find an empty slot
+                if (slot.innerHTML === '') {
                     const cardName = filename.split('.')[0].replace(/-/g, ' ');
-                    // Create and insert a raw image tag
                     slot.innerHTML = `<img src="${newImageSrc}" alt="${cardName}" title="${cardName}">`;
                     return; 
                 }
@@ -170,7 +172,7 @@
         }
 
         function removeCardFromDeck(clickedSlot) {
-            clickedSlot.innerHTML = ''; // Empty the slot
+            clickedSlot.innerHTML = '';
         }
 
         cardGrid.addEventListener('click', function(event) {
