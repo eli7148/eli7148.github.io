@@ -81,7 +81,7 @@
             gap: 10px;
         }
         
-        /* This class name should match the base class in your sprites.css */
+        /* The class name from your sprites.css, likely '.sprite' */
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
@@ -142,16 +142,33 @@
     </div>
 
     <script>
-        // IMPORTANT: List all 150 of your ORIGINAL image filenames here.
-        // The script uses these names to create the correct CSS class for each card.
+        // ALL 109 CARD FILENAMES EXTRACTED FROM YOUR VIDEO
         const cardImageFiles = [
-            'knight.png', 'arrows.png', 'goblins.png', 'giant.png', 'pekka.png',
-            'minions.png', 'balloon.png', 'witch.png', 'barbarians.png', 'golem.png',
-            'skeletons.png', 'valkyrie.png', 'goblin-barrel.png', 'musketeer.png',
-            'baby-dragon.png', 'prince.png'
-            // ... add the rest of your 150 filenames here, for example:
-            // 'hog-rider.png',
-            // 'x-bow.png',
+            'archers.png', 'arrows.png', 'baby-dragon.png', 'balloon.png', 'bandit.png', 
+            'barbarian-barrel.png', 'barbarian-hut.png', 'barbarians.png', 'bats.png', 
+            'battle-healer.png', 'battle-ram.png', 'bomb-tower.png', 'bomber.png', 
+            'bowler.png', 'cannon-cart.png', 'cannon.png', 'clone.png', 'dark-prince.png', 
+            'dart-goblin.png', 'earthquake.png', 'electro-dragon.png', 'electro-giant.png', 
+            'electro-spirit.png', 'electro-wizard.png', 'elite-barbarians.png', 
+            'elixir-collector.png', 'elixir-golem.png', 'executioner.png', 'fire-spirits.png', 
+            'fireball.png', 'firecracker.png', 'fisherman.png', 'flying-machine.png', 
+            'freeze.png', 'furnace.png', 'giant-skeleton.png', 'giant-snowball.png', 
+            'giant.png', 'goblin-barrel.png', 'goblin-cage.png', 'goblin-gang.png', 
+            'goblin-giant.png', 'goblin-hut.png', 'goblins.png', 'golem.png', 
+            'graveyard.png', 'guards.png', 'heal-spirit.png', 'hog-rider.png', 
+            'hunter.png', 'ice-golem.png', 'ice-spirit.png', 'ice-wizard.png', 
+            'inferno-dragon.png', 'inferno-tower.png', 'knight.png', 'lava-hound.png', 
+            'lightning.png', 'lumberjack.png', 'magic-archer.png', 'mega-knight.png', 
+            'mega-minion.png', 'miner.png', 'mini-pekka.png', 'minion-horde.png', 
+            'minions.png', 'mirror.png', 'mortar.png', 'mother-witch.png', 
+            'musketeer.png', 'night-witch.png', 'pekka.png', 'poison.png', 'prince.png', 
+            'princess.png', 'rage.png', 'ram-rider.png', 'rascals.png', 'rocket.png', 
+            'royal-delivery.png', 'royal-ghost.png', 'royal-giant.png', 'royal-hogs.png', 
+            'royal-recruits.png', 'skeleton-army.png', 'skeleton-barrel.png', 
+            'skeleton-dragons.png', 'skeletons.png', 'sparky.png', 'spear-goblins.png', 
+            'tesla.png', 'the-log.png', 'three-musketeers.png', 'tombstone.png', 
+            'tornado.png', 'valkyrie.png', 'wall-breakers.png', 'witch.png', 
+            'wizard.png', 'x-bow.png', 'zap.png', 'zappies.png'
         ];
 
         const cardGrid = document.getElementById('card-grid');
@@ -159,11 +176,7 @@
         let cardHTML = '';
 
         for (const fileName of cardImageFiles) {
-            // Get the card name without the '.png' or '.jpg' to use as a class
-            // This must match the class names in your sprites.css file (e.g., .knight, .arrows)
             const cardName = fileName.split('.')[0];
-            
-            // This creates a div with the class "sprite" and the specific card's class (e.g., "knight")
             cardHTML += `<div class="sprite ${cardName}"></div>`;
         }
 
