@@ -74,8 +74,8 @@
         }
 
         .deck-builder {
-            /* FIXED: Reduced the width to make the entire panel smaller */
-            flex: 0 1 160px; 
+            /* ADJUSTED: Slightly increased width for bigger cards */
+            flex: 0 1 180px; 
         }
 
         .deck-grid {
@@ -94,14 +94,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* REMOVED: No default image inside, so no broken icons */
+            /* Removed img related styling here as img tags are gone */
         }
         
-        .card img, .deck-slot img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-        }
-
         .card:hover {
             border-color: #3498db;
             transform: scale(1.05);
@@ -113,6 +109,7 @@
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
             font-size: 24px;
+            width: 100%; /* Ensure title fills its container */
         }
 
         #card-count {
@@ -134,37 +131,36 @@
             <div class="panel card-selection">
                 <h2>Card Collection <span id="card-count">(16)</span></h2>
                 <div class="card-selection-grid">
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
-                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
                 </div>
             </div>
         </div>
 
         <div class="panel deck-builder">
-            <h2>Your Deck</h2>
-            <div class="deck-grid">
-                <div class="deck-slot"><img src="" alt="Deck Slot 1"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 2"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 3"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 4"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 5"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 6"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 7"></div>
-                <div class="deck-slot"><img src="" alt="Deck Slot 8"></div>
+            <h2>Deck</h2> <div class="deck-grid">
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
             </div>
         </div>
 
