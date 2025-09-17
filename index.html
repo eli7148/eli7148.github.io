@@ -66,33 +66,34 @@
         
         .card-selection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(97px, 1fr));
+            grid-template-columns: repeat(auto-fill, 150px);
             gap: 15px;
-            justify-items: center;
+            justify-content: center;
         }
 
         .deck-builder {
-            flex: 0 1 175px; 
+            flex: 0 0 200px;
         }
 
         .deck-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
+            grid-auto-rows: min-content;
         }
         
-        .sprite {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
         .deck-slot {
-             aspect-ratio: 0.8;
+             aspect-ratio: 0.83;
              background-color: #1e2a38;
              border: 2px dashed #4a627a;
              border-radius: 8px;
-             /* Add a transition for when cards are added/removed */
-             transition: background-image 0.2s;
+             cursor: pointer;
+        }
+
+        /* The .sprite class comes from sprites.css */
+        .sprite {
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
         .sprite:hover {
@@ -143,85 +144,65 @@
     </div>
 
     <script>
-        const cardImageFiles = [
-            'archers.png', 'arrows.png', 'baby-dragon.png', 'balloon.png', 'bandit.png', 
-            'barbarian-barrel.png', 'barbarian-hut.png', 'barbarians.png', 'bats.png', 
-            'battle-healer.png', 'battle-ram.png', 'bomb-tower.png', 'bomber.png', 
-            'bowler.png', 'cannon-cart.png', 'cannon.png', 'clone.png', 'dark-prince.png', 
-            'dart-goblin.png', 'earthquake.png', 'electro-dragon.png', 'electro-giant.png', 
-            'electro-spirit.png', 'electro-wizard.png', 'elite-barbarians.png', 
-            'elixir-collector.png', 'elixir-golem.png', 'executioner.png', 'fire-spirits.png', 
-            'fireball.png', 'firecracker.png', 'fisherman.png', 'flying-machine.png', 
-            'freeze.png', 'furnace.png', 'giant-skeleton.png', 'giant-snowball.png', 
-            'giant.png', 'goblin-barrel.png', 'goblin-cage.png', 'goblin-gang.png', 
-            'goblin-giant.png', 'goblin-hut.png', 'goblins.png', 'golem.png', 
-            'graveyard.png', 'guards.png', 'heal-spirit.png', 'hog-rider.png', 
-            'hunter.png', 'ice-golem.png', 'ice-spirit.png', 'ice-wizard.png', 
-            'inferno-dragon.png', 'inferno-tower.png', 'knight.png', 'lava-hound.png', 
-            'lightning.png', 'lumberjack.png', 'magic-archer.png', 'mega-knight.png', 
-            'mega-minion.png', 'miner.png', 'mini-pekka.png', 'minion-horde.png', 
-            'minions.png', 'mirror.png', 'mortar.png', 'mother-witch.png', 
-            'musketeer.png', 'night-witch.png', 'pekka.png', 'poison.png', 'prince.png', 
-            'princess.png', 'rage.png', 'ram-rider.png', 'rascals.png', 'rocket.png', 
-            'royal-delivery.png', 'royal-ghost.png', 'royal-giant.png', 'royal-hogs.png', 
-            'royal-recruits.png', 'skeleton-army.png', 'skeleton-barrel.png', 
-            'skeleton-dragons.png', 'skeletons.png', 'sparky.png', 'spear-goblins.png', 
-            'tesla.png', 'the-log.png', 'three-musketeers.png', 'tombstone.png', 
-            'tornado.png', 'valkyrie.png', 'wall-breakers.png', 'witch.png', 
-            'wizard.png', 'x-bow.png', 'zap.png', 'zappies.png'
+        const cardClassNames = [
+            'archers', 'arrows', 'baby-dragon', 'balloon', 'bandit', 'barbarian-barrel', 'barbarian-hut', 'barbarians',
+            'bats', 'battle-healer', 'battle-ram', 'bomb-tower', 'bomber', 'bowler', 'cannon-cart', 'cannon', 'clone',
+            'dark-prince', 'dart-goblin', 'earthquake', 'electro-dragon', 'electro-giant', 'electro-spirit',
+            'electro-wizard', 'elite-barbarians', 'elixir-collector', 'elixir-golem', 'executioner', 'fire-spirits',
+            'fireball', 'firecracker', 'fisherman', 'flying-machine', 'freeze', 'furnace', 'giant-skeleton',
+            'giant-snowball', 'giant', 'goblin-barrel', 'goblin-cage', 'goblin-gang', 'goblin-giant', 'goblin-hut',
+            'goblins', 'golem', 'guards', 'graveyard', 'heal-spirit', 'heal', 'hog-rider', 'hunter', 'ice-golem',
+            'ice-spirit', 'ice-wizard', 'inferno-dragon', 'knight', 'lava-hound', 'lightning', 'inferno-tower',
+            'lumberjack', 'mega-minion', 'miner', 'mega-knight', 'magic-archer', 'mini-pekka', 'minion-horde', 'minions',
+            'mirror', 'mortar', 'mother-witch', 'musketeer', 'night-witch', 'pekka', 'poison', 'prince', 'princess',
+            'rage', 'ram-rider', 'rascals', 'rocket', 'royal-delivery', 'royal-ghost', 'royal-giant', 'royal-hogs',
+            'royal-recruits', 'skeleton-army', 'skeleton-barrel', 'skeleton-dragons', 'skeletons', 'sparky',
+            'spear-goblins', 'tesla', 'the-log', 'three-musketeers', 'tombstone', 'tornado', 'valkyrie',
+            'wall-breakers', 'witch', 'wizard', 'x-bow', 'zap', 'zappies'
         ];
 
-        // --- Get references to our HTML elements ---
         const cardGrid = document.getElementById('card-grid');
         const deckGrid = document.getElementById('deck-grid');
         const cardCountSpan = document.getElementById('card-count');
-        
-        // --- Generate the Card Collection ---
         let cardHTML = '';
-        for (const fileName of cardImageFiles) {
-            const cardName = fileName.split('.')[0];
-            // Add a data attribute to store the class names for easy copying
+
+        for (const cardName of cardClassNames) {
             cardHTML += `<div class="sprite ${cardName}" data-card-class="sprite ${cardName}"></div>`;
         }
         cardGrid.innerHTML = cardHTML;
-        cardCountSpan.textContent = `(${cardImageFiles.length})`;
+        cardCountSpan.textContent = `(${cardClassNames.length})`;
 
-        // --- Add a card to the deck ---
         function addCardToDeck(cardClasses) {
             const deckSlots = deckGrid.querySelectorAll('.deck-slot');
-            for (const slot of deckSlots) {
-                // Find the first slot that is empty (only has 'deck-slot' class)
-                if (slot.classList.length === 1) {
-                    slot.className = cardClasses; // Apply the card's sprite classes
-                    return; // Exit the function after adding the card
+            
+            const cardsInDeck = deckGrid.querySelectorAll('[class*="sprite"]');
+            for(const card of cardsInDeck) {
+                if (card.className.includes(cardClasses.split(' ')[1])) { // Check for the specific card name
+                    return; 
                 }
             }
-            // Optional: Alert the user if the deck is full
-            // alert("Your deck is full!");
+            
+            for (const slot of deckSlots) {
+                if (slot.classList.length === 1) { 
+                    slot.className = `deck-slot ${cardClasses}`; 
+                    return;
+                }
+            }
         }
 
-        // --- Remove a card from the deck ---
         function removeCardFromDeck(clickedCard) {
-            // Reset the element back to being just a deck slot
-            clickedCard.className = 'deck-slot';
+            clickedCard.className = 'deck-slot'; 
         }
 
-        // --- Event Listeners ---
-
-        // Listen for clicks on the entire card collection
         cardGrid.addEventListener('click', function(event) {
-            // Check if the clicked element is a card
             if (event.target.classList.contains('sprite')) {
                 const cardClasses = event.target.dataset.cardClass;
                 addCardToDeck(cardClasses);
             }
         });
 
-        // Listen for clicks on the deck
         deckGrid.addEventListener('click', function(event) {
-            // Check if the clicked element is a card in the deck
-            // It's a card if it's not just a simple 'deck-slot'
-            if (event.target.classList.length > 1 && event.target.classList.contains('deck-slot')) {
+            if (event.target.classList.contains('sprite')) {
                 removeCardFromDeck(event.target);
             }
         });
