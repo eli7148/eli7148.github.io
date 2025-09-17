@@ -17,16 +17,14 @@
             box-sizing: border-box;
         }
         html, body {
-            height: 100%; /* Make sure the page can fill the full height */
-            margin: 0;
-            overflow: hidden; /* Prevent the body itself from scrolling */
+            height: 100%; /* Make sure the page can fill the screen */
+            overflow: hidden; /* Prevent the main page from scrolling */
         }
         body {
             background-color: #1e2a38;
             color: #ecf0f1;
+            margin: 0;
             padding: 20px;
-            display: flex; /* Use flexbox for the main layout */
-            flex-direction: column; /* Stack sections vertically */
         }
         .app-container {
             width: 100%;
@@ -34,16 +32,14 @@
             margin: 0 auto;
             display: flex;
             gap: 20px;
-            align-items: flex-start;
-            flex: 1; /* Allow container to grow */
-            min-height: 0; /* Necessary for flex child scrolling */
+            height: 100%; /* Make the app container fill the body height */
         }
         .left-column {
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            height: 100%; /* Make left column fill the container height */
+            height: 100%; /* Allow left column to fill the container height */
         }
         .panel {
             background-color: #2c3e50;
@@ -56,9 +52,9 @@
             border: 2px solid #3498db; background-color: #1e2a38; color: #ecf0f1;
         }
         .card-selection {
-            /* FIXED: Panel now grows to fill available space */
+            /* FIXED: Make this panel grow to fill the available space */
             flex: 1;
-            min-height: 0;
+            min-height: 0; /* Important for flex scrolling */
             overflow-y: auto;
         }
         .card-selection-grid {
@@ -71,7 +67,7 @@
             flex: 0 0 200px;
         }
         .deck-grid {
-            /* FIXED: Grid properties restored for a 2x4 layout */
+            /* FIXED: Restored the 2-column grid layout */
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
@@ -90,6 +86,7 @@
         .sprite:hover {
             transform: scale(1.05);
         }
+        /* This rule prevents the sprite from resizing the deck slots */
         .deck-grid .sprite {
             width: 100%;
             height: 100%;
@@ -143,31 +140,24 @@
             'spear-goblins', 'tesla', 'the-log', 'three-musketeers', 'tombstone', 'tornado', 'valkyrie',
             'wall-breakers', 'witch', 'wizard', 'x-bow', 'zap', 'zappies'
         ];
-
         const cardGrid = document.getElementById('card-grid');
         const deckGrid = document.getElementById('deck-grid');
         const cardCountSpan = document.getElementById('card-count');
         let cardHTML = '';
-
         for (const cardName of cardClassNames) {
             cardHTML += `<div class="sprite ${cardName}" data-card-class="sprite ${cardName}"></div>`;
         }
         cardGrid.innerHTML = cardHTML;
         cardCountSpan.textContent = `(${cardClassNames.length})`;
-
         function addCardToDeck(cardClasses) {
             const deckSlots = deckGrid.querySelectorAll('.deck-slot');
             const newCardName = cardClasses.split(' ')[1];
-
             const cardsInDeck = deckGrid.querySelectorAll('[class*="sprite"]');
             for(const card of cardsInDeck) {
                 if (card.classList.contains(newCardName)) {
-                    card.classList.add('shake');
-                    setTimeout(() => card.classList.remove('shake'), 500);
                     return; 
                 }
             }
-            
             for (const slot of deckSlots) {
                 if (slot.classList.length === 1) { 
                     slot.className = `deck-slot ${cardClasses}`; 
@@ -175,18 +165,15 @@
                 }
             }
         }
-
         function removeCardFromDeck(clickedCard) {
             clickedCard.className = 'deck-slot'; 
         }
-
         cardGrid.addEventListener('click', function(event) {
             if (event.target.classList.contains('sprite')) {
                 const cardClasses = event.target.dataset.cardClass;
                 addCardToDeck(cardClasses);
             }
         });
-
         deckGrid.addEventListener('click', function(event) {
             if (event.target.classList.contains('sprite')) {
                 removeCardFromDeck(event.target);
