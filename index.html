@@ -21,35 +21,26 @@
             background-color: #1e2a38;
             color: #ecf0f1;
             margin: 0;
-            padding: 20px; /* Padding for the sides */
-            /* REMOVED: Top padding is gone */
-            padding-top: 0; 
-            padding-bottom: 0;
-            height: 100vh; /* Use full viewport height */
-            display: flex;
-            flex-direction: column; /* Main layout is now vertical */
+            /* FIXED: Padding applied only to the sides and bottom */
+            padding: 20px;
+            padding-top: 0; /* Ensures content starts at the very top */
         }
 
         .app-container {
             width: 100%;
             max-width: 1200px;
-            margin: 0 auto; /* Center the content */
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            height: 100%;
-        }
-        
-        /* ADDED: A wrapper for the top row content */
-        .top-content {
+            margin: 0 auto;
             display: flex;
             gap: 20px;
             align-items: flex-start;
-            padding-top: 20px; /* Add padding here so it's inside the page flow */
+            padding-top: 20px; /* Add padding here so the container starts slightly lower, but the body background is at the top */
         }
-
-        .search-panel {
-            flex: 1 1 auto; /* Search panel grows to fill space */
+        
+        .left-column {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .panel {
@@ -74,9 +65,7 @@
         }
 
         .card-selection {
-            /* This panel will now grow and scroll */
-            flex: 1; 
-            min-height: 0; /* Necessary for flex-grow to work with scrolling */
+            max-height: 85vh;
             overflow-y: auto;
         }
 
@@ -130,45 +119,45 @@
 
     <div class="app-container">
         
-        <div class="top-content">
-            <div class="panel search-panel">
+        <div class="left-column">
+            <div class="panel">
                 <input type="search" id="search-bar" placeholder="Search for cards...">
             </div>
 
-            <div class="panel deck-builder">
-                <h2>Deck</h2>
-                <div class="deck-grid">
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
-                    <div class="deck-slot"></div>
+            <div class="panel card-selection">
+                <h2>Card Collection <span id="card-count">(16)</span></h2>
+                <div class="card-selection-grid">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
                 </div>
             </div>
         </div>
 
-        <div class="panel card-selection">
-            <h2>Card Collection <span id="card-count">(16)</span></h2>
-            <div class="card-selection-grid">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+        <div class="panel deck-builder">
+            <h2>Deck</h2>
+            <div class="deck-grid">
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
+                <div class="deck-slot"></div>
             </div>
         </div>
 
