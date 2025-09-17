@@ -7,6 +7,7 @@
     <style>
         @font-face {
             font-family: 'You Blockhead';
+            /* Make sure your font file is named exactly this */
             src: url('./you-blockhead.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
@@ -18,7 +19,6 @@
         }
 
         body {
-            /* THEME: Main background is orange */
             background-color: #f47b20;
             color: #ecf0f1;
             margin: 0;
@@ -36,14 +36,13 @@
         }
         
         .left-column {
-            flex: 1 1 auto; /* Allow this column to grow and fill space */
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
         .panel {
-            /* THEME: Panels are now dark gray */
             background-color: #212121;
             padding: 15px;
             border-radius: 8px;
@@ -55,7 +54,6 @@
             padding: 10px;
             font-size: 16px;
             border-radius: 5px;
-            /* THEME: Search bar themed orange and black */
             border: 2px solid #ff9800;
             background-color: #333;
             color: #ecf0f1;
@@ -66,7 +64,6 @@
         }
 
         .card-selection {
-            /* LAYOUT: Use max-height to ensure it doesn't push things off-screen */
             max-height: 85vh;
             overflow-y: auto;
         }
@@ -78,20 +75,19 @@
         }
 
         .deck-builder {
-             /* LAYOUT: Set a flexible but constrained width */
-            flex: 0 1 200px;
+            /* FIXED: Made the column narrower */
+            flex: 0 1 120px;
         }
 
         .deck-grid {
-            display: grid;
-            /* LAYOUT: Changed to a single column to fit all cards neatly */
-            grid-template-columns: 1fr;
-            gap: 10px; /* Reduced gap for a tighter fit */
+            /* FIXED: Changed to a flex column for better control */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .card, .deck-slot {
             aspect-ratio: 0.8;
-            /* THEME: Card backgrounds and borders updated */
             background-color: #333;
             border: 2px dashed #555;
             border-radius: 10px;
@@ -109,7 +105,6 @@
         }
 
         .card:hover {
-             /* THEME: Hover highlight is now orange */
             border-color: #ff9800;
             transform: scale(1.05);
         }
@@ -117,7 +112,6 @@
         h2 {
             margin-top: 0;
             text-align: center;
-            /* THEME: Header underline is now orange */
             border-bottom: 2px solid #ff9800;
             padding-bottom: 10px;
             font-size: 24px;
