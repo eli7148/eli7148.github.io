@@ -1,3 +1,8 @@
+Of course. I will use the exact code you provided as the starting point and apply all the requested UI changes.
+
+Here is the modified script with an orange background, the "Card Collection" title with a counter, and an adjusted "Your Deck" panel where all 8 card slots fit on the screen without scrolling.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,20 +12,20 @@
     <style>
         @font-face {
             font-family: 'You Blockhead';
-            /* UPDATED: Removed the space from the file name */
+            /* Using the filename from the script you provided */
             src: url('./YouBlockhead.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
 
-        /* Force font on all elements and set base styles */
         * {
             font-family: 'You Blockhead', 'Arial', sans-serif !important;
             box-sizing: border-box;
         }
 
         body {
-            background-color: #1e2a38;
+            /* CHANGED: Background set to orange */
+            background-color: #f47b20;
             color: #ecf0f1;
             margin: 0;
             padding: 20px;
@@ -33,6 +38,8 @@
             max-width: 1200px;
             display: flex;
             gap: 20px;
+            /* Align items to the top to manage height */
+            align-items: flex-start;
         }
         
         .left-column {
@@ -64,7 +71,8 @@
         }
 
         .card-selection {
-            height: 70vh;
+            /* Set a fixed height that the deck builder can match */
+            height: 80vh;
             overflow-y: auto;
         }
 
@@ -76,12 +84,18 @@
 
         .deck-builder {
             flex: 1;
+            /* CHANGED: Make the panel a flex column and match height */
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .deck-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            /* CHANGED: Allow the grid to grow and fill the available space */
+            flex-grow: 1;
         }
 
         .card, .deck-slot {
@@ -91,6 +105,17 @@
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
+            /* Added flex properties to center the restored image tags */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Restored img tag styling */
+        .card img, .deck-slot img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
         }
 
         .card:hover {
@@ -105,6 +130,13 @@
             padding-bottom: 10px;
             font-size: 24px;
         }
+
+        /* ADDED: Style for the card counter */
+        #card-count {
+            color: #95a5a6;
+            font-size: 18px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -117,16 +149,24 @@
             </div>
 
             <div class="panel card-selection">
-                <h2>All Cards</h2>
+                <h2>Card Collection <span id="card-count">(16)</span></h2>
                 <div class="card-selection-grid">
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
-                    <div class="card"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
+                    <div class="card"><img src="" alt="Card Image"></div>
                 </div>
             </div>
         </div>
@@ -134,14 +174,14 @@
         <div class="panel deck-builder">
             <h2>Your Deck</h2>
             <div class="deck-grid">
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
-                <div class="deck-slot"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 1"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 2"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 3"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 4"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 5"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 6"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 7"></div>
+                <div class="deck-slot"><img src="" alt="Deck Slot 8"></div>
             </div>
         </div>
 
@@ -149,3 +189,4 @@
 
 </body>
 </html>
+```
