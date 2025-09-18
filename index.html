@@ -21,20 +21,25 @@
             color: #ecf0f1;
             margin: 0;
             padding: 20px;
+            height: 100vh;
+            overflow: hidden; /* Prevent the main page from scrolling */
         }
+        /* FIXED: Rebuilt the main layout with CSS Grid for stability */
         .app-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px; /* Increased max-width for wider layout */
             margin: 0 auto;
-            display: flex;
+            display: grid;
+            /* Column 1 (left) takes up all extra space, Column 2 (right) is fixed */
+            grid-template-columns: 1fr 350px; 
             gap: 20px;
-            align-items: flex-start;
+            height: 100%;
         }
         .left-column {
-            flex: 2 1 0;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            min-height: 0; /* Fix for flexbox + grid height */
         }
         .panel {
             background-color: #2c3e50;
@@ -47,7 +52,8 @@
             border: 2px solid #3498db; background-color: #1e2a38; color: #ecf0f1;
         }
         .card-selection {
-            max-height: 85vh;
+            flex: 1; /* This panel now grows to fill the left column */
+            min-height: 0;
             overflow-y: auto;
         }
         .card-selection-grid {
@@ -55,9 +61,6 @@
             grid-template-columns: repeat(auto-fill, 150px);
             gap: 15px;
             justify-content: center;
-        }
-        .deck-builder {
-            flex: 1 1 0;
         }
         .deck-grid {
             display: grid;
@@ -73,6 +76,10 @@
              overflow: hidden;
              position: relative;
         }
+        .sprite {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
         .sprite:hover {
             transform: scale(1.05);
         }
@@ -80,10 +87,11 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
+            /* Adjusted scale to fit the new, wider deck slots */
+            transform: translate(-50%, -50%) scale(1); 
         }
         .deck-slot > .sprite:hover {
-            transform: translate(-50%, -50%) scale(0.85);
+            transform: translate(-50%, -50%) scale(1.05);
         }
         h2 {
             margin-top: 0; text-align: center; border-bottom: 2px solid #3498db;
@@ -96,20 +104,14 @@
             animation: shake 0.5s;
         }
         @keyframes shake {
-            0%, 100% { transform: translate(-50%, -50%) scale(0.8); }
-            25% { transform: translate(-50%, -50%) scale(0.8) translateX(-5px); }
-            50% { transform: translate(-50%, -50%) scale(0.8) translateX(5px); }
-            75% { transform: translate(-50%, -50%) scale(0.8) translateX(-5px); }
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(-50%, -50%) scale(1) translateX(-5px); }
+            50% { transform: translate(-50%, -50%) scale(1) translateX(5px); }
+            75% { transform: translate(-50%, -50%) scale(1) translateX(-5px); }
         }
 
-        /* --- Full Sprite Sheet CSS Embedded Below --- */
-        .sprite { 
-            background: url('images/sprite.png') no-repeat top left; 
-            width: 150px; 
-            height: 180px;  
-            cursor: pointer;
-            transition: transform 0.2s;
-        } 
+        /* --- Full Sprite Sheet CSS --- */
+        .sprite { background: url('images/sprite.png') no-repeat top left; width: 150px; height: 180px; } 
         .sprite.archers { background-position: 0 0; } 
         .sprite.arrows { background-position: -160px 0; } 
         .sprite.baby-dragon { background-position: -320px 0; } 
