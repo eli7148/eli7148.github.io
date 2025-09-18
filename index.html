@@ -29,7 +29,6 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            /* FIXED: Made the right column wider */
             grid-template-columns: 1fr 500px; 
             gap: 20px;
             height: 100%;
@@ -61,6 +60,11 @@
             gap: 15px;
             justify-content: center;
         }
+        .deck-builder {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
         .deck-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -69,20 +73,18 @@
         .deck-slot {
              aspect-ratio: 0.833;
              background-color: #1e2a38;
-             border: 2px dashed #4a627a;
              border-radius: 8px;
              cursor: pointer;
              overflow: hidden;
              position: relative;
         }
-        /* ADDED: This style makes the slot background disappear when a card is added */
         .deck-slot.filled {
             background-color: transparent;
-            border: none;
         }
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
+            position: relative; 
         }
         .sprite:hover {
             transform: scale(1.05);
@@ -91,7 +93,6 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Adjusted scale for the new larger deck slots */
             transform: translate(-50%, -50%) scale(0.75); 
         }
         .deck-slot > .sprite:hover {
@@ -100,13 +101,14 @@
         h2 {
             margin-top: 0;
             text-align: center;
-            /* FIXED: Blue lines permanently removed, margin added for spacing */
             margin-bottom: 15px;
             font-size: 24px;
             width: 100%;
         }
         #card-count {
-            color: #95a6; font-size: 18px; vertical-align: middle;
+            color: white; 
+            font-size: 18px; 
+            vertical-align: middle;
         }
         .shake {
             animation: shake 0.5s;
@@ -116,6 +118,26 @@
             25% { transform: translate(-50%, -50%) scale(0.75) translateX(-5px); }
             50% { transform: translate(-50%, -50%) scale(0.75) translateX(5px); }
             75% { transform: translate(-50%, -50%) scale(0.75) translateX(-5px); }
+        }
+        .elixir-overlay {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 38px;
+            height: 45px;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARoSURBVFhHzZlriFVVFMd/5w4z48ykmTBqKILgHy2KNkVB0EUhblR81kWMLoKuuuoKwdZNb29b5cIs1FKEuAm7CCoKgopgMSolZk0kKWaah2k+fXDXybmZe+6d4xSHDxxmzpz5n7322WvvvQckJycnaZqml2wGdoDTwFngN3AA+Aw8A4bA+b4+A36W7S/5NTAKvAM2gR3gasw0/gIOgL+k+5fAX+ARsAxcAgaAL0CSHwI/Sq4zYA04AuwFvgLPgYdM058AF0A10JMc4g3gLXAA+BzoAMOBh4BvOfbPAc+BhcB74G9g3xvgO/AJ8B+4DjwD+pfvA/+BN3l64JdwCdgCvErSAx6X/CvAPeBZ4FvgN3Ap8Bv4CjgI/A7+A04C/wHngYvAc+A5cAm4DFwCzgefg0uA58A3wMXgY+A7cBl4DLwMXgO+A5eB58FHYD74CBgFPgaGA9OAaWAC+AgYAf4CjgD/gaOAf+AocBTYCSwGVgKbgM3ApmA3sB1YDWwG1gLbgM3AprA72AOsB9YCa4F1wLpgXXAtuB5cC64D1wPrgevB9eB6cD24HlwPbge3g9vBbeB2cD24GdwEbgY3gRvBjeA2cCO4CdwEbgV3givBneA2cCu4E9wKbgv3gisW6f/gT+A/4B/wD3gY/Ae8CrwHvgeeBN8Cr4Pvge+BV8F3wffA98C74Dvg+/B98C7YAD4HngYbAc+AZYBnwTLAU+CZYA3wVLAa+CZYA3wdrAW+DNYA3wfrgHXDt8FawPvg7WAt8C74e1gLfAO+HtYC3wBvh7WAX+Ct8dawDvgLXA/eBq8A14PrwXvgdfB68B54HbwevgfeB68H74D3wOvhe+Bt8DYYA8YB08Bk8AUYAc4Ax8BT4BhwDDiCHECOAUeQ48BR5BhwDDmCHCGPIUeEY8gx4BhyDDmCHEWOEMeQY8wx4BhzDDnGHGPOIUeYY8wx5BhzjDnEnHPOIUeEc+AxYAD4ClgE/gaWAW8Ay4B3wCLAceA48AhwHDgOnCAOAccB08BEYBr4BBgGzgCngE+Ay8A54AvwCXAWuAxcAg4DlwHHgePAceAYcBQ4AhwFjgKngePAVeAocBU4ClwFjgOXgUvA5eAycAm4DFwGzgCXgcvAZeAycBl4DlgGLgOWAccCy4BlwLJgGbAsWAYsC5YDy4HlwHLgOGBJcAy4HjgSXA4cCS4HjgWXA8uB5cBy4AhwPLgMHAUuBYeBy4Dh4HJwFDgOXA4OBReCo8Bl4Lh/A14HLgLHAYuB4/4NeBy4DBwGLgLH/RvwJLgMHAUuBYf9G/AscAw4ClwEjuM34DlwADgOXASO+zfgB+As8BjYCPwFjgH/kGfAMeA/8D84CvwnnAP+A8+Ap8EHYD6YBj4CBuB/4BhwFDgKHAMOAUeQY8Ax5BhwDDmCHEWOIMeQY8gx4BhzDDmGnIMz8DnwDjgCPAeeBYeAkcAy4BmwFPge2ATsBTYDC4EdwE5gL3ApkE+X/wE8nWe/v4GvJSy+L/l/Ac3R97P0h5/vAAAAAElFTkSuQmCC');
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .elixir-cost {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px #000, -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000;
         }
 
         /* --- Full Sprite Sheet CSS --- */
@@ -247,9 +269,10 @@
         </div>
     </div>
     <script>
-        const cardClassNames = [
-            'archers', 'arrows', 'baby-dragon', 'balloon', 'bandit', 'barbarian-barrel', 'barbarian-hut', 'barbarians', 'bats', 'battle-healer', 'battle-ram', 'bomb-tower', 'bomber', 'bowler', 'cannon-cart', 'cannon', 'clone', 'dark-prince', 'dart-goblin', 'earthquake', 'electro-dragon', 'electro-giant', 'electro-spirit', 'electro-wizard', 'elite-barbarians', 'elixir-collector', 'elixir-golem', 'executioner', 'fire-spirits', 'fireball', 'firecracker', 'fisherman', 'flying-machine', 'freeze', 'furnace', 'giant-skeleton', 'giant-snowball', 'giant', 'goblin-barrel', 'goblin-cage', 'goblin-gang', 'goblin-giant', 'goblin-hut', 'goblins', 'golem', 'guards', 'graveyard', 'heal-spirit', 'heal', 'hog-rider', 'hunter', 'ice-golem', 'ice-spirit', 'ice-wizard', 'inferno-dragon', 'knight', 'lava-hound', 'lightning', 'inferno-tower', 'lumberjack', 'mega-minion', 'miner', 'mega-knight', 'magic-archer', 'mini-pekka', 'minion-horde', 'minions', 'mirror', 'mortar', 'mother-witch', 'musketeer', 'night-witch', 'pekka', 'poison', 'prince', 'princess', 'rage', 'ram-rider', 'rascals', 'rocket', 'royal-delivery', 'royal-ghost', 'royal-giant', 'royal-hogs', 'royal-recruits', 'skeleton-army', 'skeleton-barrel', 'skeleton-dragons', 'skeletons', 'sparky', 'spear-goblins', 'tesla', 'the-log', 'three-musketeers', 'tombstone', 'tornado', 'valkyrie', 'wall-breakers', 'witch', 'wizard', 'x-bow', 'zap', 'zappies'
-        ];
+        const elixirCosts = {
+            'archers': 3, 'arrows': 3, 'baby-dragon': 4, 'balloon': 5, 'bandit': 3, 'barbarian-barrel': 2, 'barbarian-hut': 7, 'barbarians': 5, 'bats': 2, 'battle-healer': 4, 'battle-ram': 4, 'bomb-tower': 4, 'bomber': 2, 'bowler': 5, 'cannon-cart': 5, 'cannon': 3, 'clone': 3, 'dark-prince': 4, 'dart-goblin': 3, 'earthquake': 3, 'electro-dragon': 5, 'electro-giant': 7, 'electro-spirit': 1, 'electro-wizard': 4, 'elite-barbarians': 6, 'elixir-collector': 6, 'elixir-golem': 3, 'executioner': 5, 'fire-spirits': 1, 'fireball': 4, 'firecracker': 2, 'fisherman': 3, 'flying-machine': 4, 'freeze': 4, 'furnace': 4, 'giant-skeleton': 6, 'giant-snowball': 2, 'giant': 5, 'goblin-barrel': 3, 'goblin-cage': 4, 'goblin-gang': 3, 'goblin-giant': 6, 'goblin-hut': 5, 'goblins': 2, 'golem': 8, 'guards': 3, 'graveyard': 5, 'heal-spirit': 1, 'heal': 2, 'hog-rider': 4, 'hunter': 4, 'ice-golem': 2, 'ice-spirit': 1, 'ice-wizard': 3, 'inferno-dragon': 4, 'inferno-tower': 5, 'knight': 3, 'lava-hound': 7, 'lightning': 6, 'lumberjack': 4, 'magic-archer': 4, 'mega-knight': 7, 'mega-minion': 3, 'miner': 3, 'mini-pekka': 4, 'minion-horde': 5, 'minions': 3, 'mirror': 0, 'mortar': 4, 'mother-witch': 4, 'musketeer': 4, 'night-witch': 4, 'pekka': 7, 'poison': 4, 'prince': 5, 'princess': 3, 'rage': 2, 'ram-rider': 5, 'rascals': 5, 'rocket': 6, 'royal-delivery': 3, 'royal-ghost': 3, 'royal-giant': 6, 'royal-hogs': 5, 'royal-recruits': 7, 'skeleton-army': 3, 'skeleton-barrel': 3, 'skeleton-dragons': 4, 'skeletons': 1, 'sparky': 6, 'spear-goblins': 2, 'tesla': 4, 'the-log': 2, 'three-musketeers': 9, 'tombstone': 3, 'tornado': 3, 'valkyrie': 4, 'wall-breakers': 2, 'witch': 5, 'wizard': 5, 'x-bow': 6, 'zap': 2, 'zappies': 4
+        };
+        const cardClassNames = Object.keys(elixirCosts);
         
         const cardGrid = document.getElementById('card-grid');
         const deckGrid = document.getElementById('deck-grid');
@@ -257,7 +280,16 @@
         
         let cardHTML = '';
         for (const cardName of cardClassNames) {
-            cardHTML += `<div class="sprite ${cardName}" data-card-class="sprite ${cardName}"></div>`;
+            const cost = elixirCosts[cardName] !== undefined ? elixirCosts[cardName] : '?';
+            // Added a check for mirror which has a variable cost, represented as 0 here
+            const displayCost = (cardName === 'mirror') ? '?' : cost;
+            
+            cardHTML += `
+                <div class="sprite ${cardName}" data-card-class="sprite ${cardName}">
+                    <div class="elixir-overlay">
+                        <span class="elixir-cost">${displayCost}</span>
+                    </div>
+                </div>`;
         }
         cardGrid.innerHTML = cardHTML;
         cardCountSpan.textContent = `(${cardClassNames.length})`;
@@ -280,9 +312,8 @@
                 if (slot.innerHTML === '') {
                     const newCardDiv = document.createElement('div');
                     newCardDiv.className = cardClasses;
-                    // Add a class to the parent slot when it's filled
-                    slot.classList.add('filled');
                     slot.appendChild(newCardDiv);
+                    slot.classList.add('filled');
                     return;
                 }
             }
@@ -290,7 +321,6 @@
 
         function removeCardFromDeck(clickedSlot) {
             clickedSlot.innerHTML = '';
-            // Remove the 'filled' class to restore the background
             clickedSlot.classList.remove('filled');
         }
 
