@@ -52,14 +52,14 @@
         }
         .card-selection-grid {
             display: grid;
-            /* ADJUSTED: Grid now fits the new 12% smaller card size */
-            grid-template-columns: repeat(auto-fill, 66px);
-            gap: 15px;
+            /* Grid sized for the scaled-down cards */
+            grid-template-columns: repeat(auto-fill, 134px);
+            gap: 5px; /* Reduced gap to fit more */
             justify-content: center;
         }
         .deck-builder {
-            /* ADJUSTED: Deck made ~5% smaller */
-            flex: 0 0 180px;
+            /* Deck is now 7% smaller */
+            flex: 0 0 177px;
         }
         .deck-grid {
             display: grid;
@@ -67,30 +67,51 @@
             gap: 10px;
         }
         .deck-slot {
-             /* Matches the new card aspect ratio */
-             aspect-ratio: 0.835; /* 66px / 79px */
+             aspect-ratio: 0.833;
              background-color: #1e2a38;
-             border: 2px dashed #4a627a;
              border-radius: 8px;
              cursor: pointer;
+             overflow: hidden;
+             position: relative;
         }
         .sprite {
             cursor: pointer;
             transition: transform 0.2s;
         }
-        .sprite:hover {
-            transform: scale(1.05);
+        /* FIXED: Cards in collection are now 11% smaller */
+        .card-selection-grid .sprite {
+            transform: scale(0.89);
+            transform-origin: top left;
+        }
+        .card-selection-grid .sprite:hover {
+            transform: scale(0.95);
+        }
+        /* FIXED: Cards in deck are scaled to fit the smaller slots */
+        .deck-slot > .sprite {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
         }
         h2 {
             margin-top: 0;
             text-align: center;
-            /* REMOVED: Border and padding removed to bring content closer */
-            margin-bottom: 15px; /* Add margin for spacing instead */
+            /* Blue lines removed and spacing adjusted */
+            margin-bottom: 15px;
             font-size: 24px;
             width: 100%;
         }
         #card-count {
             color: #95a6; font-size: 18px; vertical-align: middle;
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%) scale(0.5); }
+            25% { transform: translate(-50%, -50%) scale(0.5) translateX(-5px); }
+            50% { transform: translate(-50%, -50%) scale(0.5) translateX(5px); }
+            75% { transform: translate(-50%, -50%) scale(0.5) translateX(-5px); }
         }
     </style>
 </head>
@@ -115,47 +136,61 @@
             </div>
         </div>
     </div>
-
     <script>
-        // No changes to the script, it will adapt to the new CSS
         const cardClassNames = [
             'archers', 'arrows', 'baby-dragon', 'balloon', 'bandit', 'barbarian-barrel', 'barbarian-hut', 'barbarians', 'bats', 'battle-healer', 'battle-ram', 'bomb-tower', 'bomber', 'bowler', 'cannon-cart', 'cannon', 'clone', 'dark-prince', 'dart-goblin', 'earthquake', 'electro-dragon', 'electro-giant', 'electro-spirit', 'electro-wizard', 'elite-barbarians', 'elixir-collector', 'elixir-golem', 'executioner', 'fire-spirits', 'fireball', 'firecracker', 'fisherman', 'flying-machine', 'freeze', 'furnace', 'giant-skeleton', 'giant-snowball', 'giant', 'goblin-barrel', 'goblin-cage', 'goblin-gang', 'goblin-giant', 'goblin-hut', 'goblins', 'golem', 'guards', 'graveyard', 'heal-spirit', 'heal', 'hog-rider', 'hunter', 'ice-golem', 'ice-spirit', 'ice-wizard', 'inferno-dragon', 'knight', 'lava-hound', 'lightning', 'inferno-tower', 'lumberjack', 'mega-minion', 'miner', 'mega-knight', 'magic-archer', 'mini-pekka', 'minion-horde', 'minions', 'mirror', 'mortar', 'mother-witch', 'musketeer', 'night-witch', 'pekka', 'poison', 'prince', 'princess', 'rage', 'ram-rider', 'rascals', 'rocket', 'royal-delivery', 'royal-ghost', 'royal-giant', 'royal-hogs', 'royal-recruits', 'skeleton-army', 'skeleton-barrel', 'skeleton-dragons', 'skeletons', 'sparky', 'spear-goblins', 'tesla', 'the-log', 'three-musketeers', 'tombstone', 'tornado', 'valkyrie', 'wall-breakers', 'witch', 'wizard', 'x-bow', 'zap', 'zappies'
         ];
+        
         const cardGrid = document.getElementById('card-grid');
         const deckGrid = document.getElementById('deck-grid');
         const cardCountSpan = document.getElementById('card-count');
+        
         let cardHTML = '';
         for (const cardName of cardClassNames) {
             cardHTML += `<div class="sprite ${cardName}" data-card-class="sprite ${cardName}"></div>`;
         }
         cardGrid.innerHTML = cardHTML;
         cardCountSpan.textContent = `(${cardClassNames.length})`;
-        function addCardToDeck(cardClasses) {
-            const deckSlots = deckGrid.querySelectorAll('.deck-slot');
+
+        function addCardToDeck(clickedCard) {
+            const cardClasses = clickedCard.dataset.cardClass;
             const newCardName = cardClasses.split(' ')[1];
-            const cardsInDeck = deckGrid.querySelectorAll('[class*="sprite"]');
-            for(const card of cardsInDeck) {
-                if (card.classList.contains(newCardName)) { return; }
+
+            const slotsInDeck = deckGrid.querySelectorAll('.deck-slot');
+            for (const slot of slotsInDeck) {
+                const cardInSlot = slot.querySelector('.sprite');
+                if (cardInSlot && cardInSlot.classList.contains(newCardName)) {
+                    cardInSlot.classList.add('shake');
+                    setTimeout(() => cardInSlot.classList.remove('shake'), 500);
+                    return;
+                }
             }
-            for (const slot of deckSlots) {
-                if (slot.classList.length === 1) { 
-                    slot.className = `sprite ${cardClasses}`;
+            
+            for (const slot of slotsInDeck) {
+                if (slot.innerHTML === '') {
+                    const newCardDiv = document.createElement('div');
+                    newCardDiv.className = cardClasses;
+                    slot.appendChild(newCardDiv);
                     return;
                 }
             }
         }
-        function removeCardFromDeck(clickedCard) {
-            clickedCard.className = 'deck-slot'; 
+
+        function removeCardFromDeck(clickedSlot) {
+            clickedSlot.innerHTML = '';
         }
+
         cardGrid.addEventListener('click', function(event) {
-            if (event.target.classList.contains('sprite')) {
-                const cardClasses = event.target.dataset.cardClass;
-                addCardToDeck(cardClasses);
+            const clickedCard = event.target.closest('.sprite');
+            if (clickedCard) {
+                addCardToDeck(clickedCard);
             }
         });
+
         deckGrid.addEventListener('click', function(event) {
-            if (event.target.classList.contains('sprite')) {
-                removeCardFromDeck(event.target);
+            const clickedSlot = event.target.closest('.deck-slot');
+            if (clickedSlot && clickedSlot.innerHTML !== '') {
+                removeCardFromDeck(clickedSlot);
             }
         });
     </script>
