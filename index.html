@@ -20,7 +20,8 @@
             background-color: #1e2a38;
             color: #ecf0f1;
             margin: 0;
-            padding: 20px;
+            /* FIXED: Padding removed from the top to align content higher */
+            padding: 0 20px 20px 20px;
         }
         .app-container {
             width: 100%;
@@ -70,7 +71,6 @@
              border-radius: 8px;
              cursor: pointer;
              overflow: hidden;
-             /* FIXED: Use relative positioning as a container for the card */
              position: relative;
         }
         .sprite {
@@ -80,7 +80,6 @@
         .sprite:hover {
             transform: scale(1.05);
         }
-        /* FIXED: New method to perfectly center and scale the card */
         .deck-slot > .sprite {
             position: absolute;
             top: 50%;
