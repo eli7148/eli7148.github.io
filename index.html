@@ -29,8 +29,8 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            /* Adjusted grid to give deck more space */
-            grid-template-columns: 1fr 400px; 
+            /* FIXED: Made the right column wider */
+            grid-template-columns: 1fr 500px; 
             gap: 20px;
             height: 100%;
         }
@@ -63,19 +63,22 @@
         }
         .deck-grid {
             display: grid;
-            /* FIXED: Changed to 4 columns */
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
         .deck-slot {
              aspect-ratio: 0.833;
              background-color: #1e2a38;
+             border: 2px dashed #4a627a;
              border-radius: 8px;
              cursor: pointer;
              overflow: hidden;
              position: relative;
-             /* FIXED: Dashed border removed */
-             border: none;
+        }
+        /* ADDED: This style makes the slot background disappear when a card is added */
+        .deck-slot.filled {
+            background-color: transparent;
+            border: none;
         }
         .sprite {
             cursor: pointer;
@@ -88,15 +91,19 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Adjusted scale for the new slot size */
-            transform: translate(-50%, -50%) scale(0.56); 
+            /* Adjusted scale for the new larger deck slots */
+            transform: translate(-50%, -50%) scale(0.75); 
         }
         .deck-slot > .sprite:hover {
-            transform: translate(-50%, -50%) scale(0.6);
+            transform: translate(-50%, -50%) scale(0.8);
         }
         h2 {
-            margin-top: 0; text-align: center; border-bottom: 2px solid #3498db;
-            padding-bottom: 10px; font-size: 24px; width: 100%;
+            margin-top: 0;
+            text-align: center;
+            /* FIXED: Blue lines permanently removed, margin added for spacing */
+            margin-bottom: 15px;
+            font-size: 24px;
+            width: 100%;
         }
         #card-count {
             color: #95a6; font-size: 18px; vertical-align: middle;
@@ -105,10 +112,10 @@
             animation: shake 0.5s;
         }
         @keyframes shake {
-            0%, 100% { transform: translate(-50%, -50%) scale(0.56); }
-            25% { transform: translate(-50%, -50%) scale(0.56) translateX(-5px); }
-            50% { transform: translate(-50%, -50%) scale(0.56) translateX(5px); }
-            75% { transform: translate(-50%, -50%) scale(0.56) translateX(-5px); }
+            0%, 100% { transform: translate(-50%, -50%) scale(0.75); }
+            25% { transform: translate(-50%, -50%) scale(0.75) translateX(-5px); }
+            50% { transform: translate(-50%, -50%) scale(0.75) translateX(5px); }
+            75% { transform: translate(-50%, -50%) scale(0.75) translateX(-5px); }
         }
 
         /* --- Full Sprite Sheet CSS --- */
@@ -230,6 +237,7 @@
             </div>
         </div>
         <div class="panel deck-builder">
+            <h2>Deck</h2>
             <div class="deck-grid" id="deck-grid">
                 <div class="deck-slot"></div><div class="deck-slot"></div>
                 <div class="deck-slot"></div><div class="deck-slot"></div>
@@ -272,6 +280,8 @@
                 if (slot.innerHTML === '') {
                     const newCardDiv = document.createElement('div');
                     newCardDiv.className = cardClasses;
+                    // Add a class to the parent slot when it's filled
+                    slot.classList.add('filled');
                     slot.appendChild(newCardDiv);
                     return;
                 }
@@ -280,6 +290,8 @@
 
         function removeCardFromDeck(clickedSlot) {
             clickedSlot.innerHTML = '';
+            // Remove the 'filled' class to restore the background
+            clickedSlot.classList.remove('filled');
         }
 
         cardGrid.addEventListener('click', function(event) {
